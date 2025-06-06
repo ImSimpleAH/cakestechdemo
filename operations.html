@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Operations - Task Force Meridian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Navbar -->
+  <nav class="bg-gray-800 px-6 py-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Task Force Meridian</h1>
+      <ul class="flex space-x-6 text-sm">
+        <li><a href="index.html" class="hover:text-teal-400">Home</a></li>
+        <li><a href="application.html" class="hover:text-teal-400">Application</a></li>
+        <li><a href="roster.html" class="hover:text-teal-400">Roster</a></li>
+        <li><a href="operations.html" class="hover:text-teal-400">Operations</a></li>
+        <li><a href="resources.html" class="hover:text-teal-400">Modlist / Resources</a></li>
+        <li><a href="ranks.html" class="hover:text-teal-400">Ranks</a></li>
+        <li><a href="qualifications.html" class="hover:text-teal-400">Qualifications</a></li>
+        <li><a href="awards.html" class="hover:text-teal-400">Awards</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Operations Section -->
+  <main class="px-6 py-16">
+    <h2 class="text-3xl font-bold mb-8 text-center">Operations Calendar</h2>
+    <div id="perscom_widget_wrapper" class="bg-gray-800 rounded-lg p-6 shadow-md">
+      <script
+        id="perscom_widget"
+        data-apikey=""
+        data-widget="calendar"
+        data-dark="false"
+        src="https://widget.perscom.io/widget.js"
+        type="text/javascript"
+      ></script>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-6 text-center text-gray-500 text-sm">
+    <p>Website design by Task Force Meridian Command Staff</p>
+  </footer>
+</body>
+</html>
