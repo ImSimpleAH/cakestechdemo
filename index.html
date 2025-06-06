@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Field Ticket Submission</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 2rem;
+      background: #f4f4f4;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      background: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-top: 0.25rem;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 1rem;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Field Ticket Entry</h1>
+  <form id="ticketForm">
+    <label for="jobName">Job Name:</label>
+    <input type="text" id="jobName" name="jobName" required>
+
+    <label for="jobNumber">Job Number:</label>
+    <input type="text" id="jobNumber" name="jobNumber" required>
+
+    <label for="workDescription">Description of Work Done:</label>
+    <textarea id="workDescription" name="workDescription" rows="4" required></textarea>
+
+    <h3>Employee Hours</h3>
+    <table id="employeeTable">
+      <thead>
+        <tr>
+          <th>Employee Name</th>
+          <th>Rate List (Job on Site)</th>
+          <th>Unit Type</th>
+          <th>Units</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="employeeRows">
+        <!-- Rows inserted here -->
+      </tbody>
+    </table>
+    <button type="button" onclick="addRow()">+ Add Employee</button>
+    <button type="submit">Submit Ticket</button>
+  </form>
+
+  <script>
+    const employeeList = ['John Smith', 'Jane Doe', 'Mike Johnson'];
+
+    function addRow() {
+      const table = document.getElementById('employeeRows');
+      const row = document.createElement('tr');
+
+      // Employee Name dropdown
+      const nameCell = document.createElement('td');
+      const nameSelect = document.createElement('select');
+      employeeList.forEach(name => {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        nameSelect.appendChild(option);
+      });
+      const addNewOption = document.createElement('option');
+      addNewOption.value = '__new__';
+      addNewOption.textContent = 'Add new...';
+      nameSelect.appendChild(addNewOption);
+      nameSelect.onchange = function () {
+        if (this.value === '__new__') {
+          const newName = prompt("Enter new employee name:");
+          if (newName) {
+            employeeList.push(newName);
+            this.innerHTML = '';
+            employeeList.forEach(name => {
+              const option = document.createElement('option');
+              option.value = name;
+              option.textContent = name;
+              this.appendChild(option);
+            });
+            this.appendChild(addNewOption);
+            this.value = newName;
+          } else {
+            this.value = '';
+          }
+        }
+      };
+      nameCell.appendChild(nameSelect);
+      row.appendChild(nameCell);
+
+      // Rate list
+      const rateCell = document.createElement('td');
+      const rateInput = document.createElement('input');
+      rateInput.type = 'text';
+      rateCell.appendChild(rateInput);
+      row.appendChild(rateCell);
+
+      // Unit type
+      const unitTypeCell = document.createElement('td');
+      const unitSelect = document.createElement('select');
+      ['Hours', 'Days', 'Loads'].forEach(unit => {
+        const option = document.createElement('option');
+        option.value = unit;
+        option.textContent = unit;
+        unitSelect.appendChild(option);
+      });
+      unitTypeCell.appendChild(unitSelect);
+      row.appendChild(unitTypeCell);
+
+      // Units
+      const unitsCell = document.createElement('td');
+      const unitsInput = document.createElement('input');
+      unitsInput.type = 'number';
+      unitsInput.min = '0';
+      unitsCell.appendChild(unitsInput);
+      row.appendChild(unitsCell);
+
+      // Remove button
+      const removeCell = document.createElement('td');
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.textContent = 'Remove';
+      removeButton.onclick = () => row.remove();
+      removeCell.appendChild(removeButton);
+      row.appendChild(removeCell);
+
+      table.appendChild(row);
+    }
+
+    document.getElementById('ticketForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      const ticket = {
+        jobName: this.jobName.value,
+        jobNumber: this.jobNumber.value,
+        description: this.workDescription.value,
+        employees: []
+      };
+
+      const rows = document.querySelectorAll('#employeeRows tr');
+      rows.forEach(row => {
+        const [nameSel, rateInput, unitTypeSel, unitsInput] = row.querySelectorAll('select, input');
+        ticket.employees.push({
+          name: nameSel.value,
+          rateList: rateInput.value,
+          unitType: unitTypeSel.value,
+          units: unitsInput.value
+        });
+      });
+
+      console.log("Submitted Ticket:", ticket);
+      alert("Ticket submitted! (Check console for data)");
+
+      this.reset();
+      document.getElementById('employeeRows').innerHTML = '';
+    });
+  </script>
+
+</body>
+</html>
