@@ -1,206 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Field Ticket Submission</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      margin: 2rem;
-      background: #f4f4f4;
-    }
-
-    h1 {
-      text-align: center;
-    }
-
-    form {
-      background: white;
-      padding: 2rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    }
-
-    label {
-      display: block;
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-
-    input, select, textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin-top: 0.25rem;
-    }
-
-    table {
-      width: 100%;
-      margin-top: 1rem;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      border: 1px solid #ccc;
-      padding: 0.5rem;
-      text-align: left;
-    }
-
-    button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Task Force Meridian</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
 </head>
-<body>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Navbar -->
+  <nav class="bg-gray-800 px-6 py-4 shadow-lg">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold">Task Force Meridian</h1>
+      <ul class="flex space-x-6 text-sm">
+        <li><a href="index.html" class="hover:text-teal-400">Home</a></li>
+        <li><a href="application.html" class="hover:text-teal-400">Application</a></li>
+        <li><a href="roster.html" class="hover:text-teal-400">Roster</a></li>
+        <li><a href="operations.html" class="hover:text-teal-400">Operations</a></li>
+        <li><a href="resources.html" class="hover:text-teal-400">Modlist / Resources</a></li>
+        <li><a href="ranks.html" class="hover:text-teal-400">Ranks</a></li>
+        <li><a href="qualifications.html" class="hover:text-teal-400">Qualifications</a></li>
+        <li><a href="awards.html" class="hover:text-teal-400">Awards</a></li>
+      </ul>
+    </div>
+  </nav>
 
-  <h1>Field Ticket Entry</h1>
-  <form id="ticketForm">
-    <label for="jobName">Job Name:</label>
-    <input type="text" id="jobName" name="jobName" required>
+  <!-- Hero Section -->
+  <header class="text-center py-16 px-6">
+    <h2 class="text-4xl font-bold mb-4">Welcome to Task Force Meridian</h2>
+    <p class="text-lg text-gray-300 max-w-2xl mx-auto">An elite rapid-response infantry unit operating on the front lines of the UNSC’s most dangerous theaters — forged in fire, bonded in battle.</p>
+  </header>
 
-    <label for="jobNumber">Job Number:</label>
-    <input type="text" id="jobNumber" name="jobNumber" required>
+  <!-- Soldier of the Month -->
+  <section class="px-6 py-10 bg-gray-800">
+    <div class="max-w-4xl mx-auto text-center">
+      <h3 class="text-2xl font-bold mb-4">Soldier of the Month</h3>
+      <div class="bg-gray-700 rounded-lg shadow-md p-6">
+        <img src="https://via.placeholder.com/150" alt="Soldier Photo" class="mx-auto rounded-full mb-4">
+        <h4 class="text-xl font-semibold">PFC John "Echo" Reyes</h4>
+        <p class="text-gray-300 mt-2">Recognized for exceptional performance in Operation Iron Dawn, showing courage under fire and exemplary leadership of 1st Squad.</p>
+      </div>
+    </div>
+  </section>
 
-    <label for="workDescription">Description of Work Done:</label>
-    <textarea id="workDescription" name="workDescription" rows="4" required></textarea>
+  <!-- About the Unit -->
+  <section class="px-6 py-16">
+    <div class="max-w-4xl mx-auto">
+      <h3 class="text-2xl font-bold mb-4 text-center">About the Unit</h3>
+      <p class="text-gray-300 leading-relaxed">
+        Task Force Meridian is a Halo-themed MILSIM unit focused on immersive infantry operations, tactical coordination, and cooperative gameplay. Operating as a platoon-sized force, we rotate through thematic campaigns and prioritize teamwork, discipline, and adaptability in the field.
+        <br><br>
+        Our members come from all backgrounds, united by our love of sci-fi realism and professional military simulation. Whether clearing Covenant strongholds or defending human colonies, we fight with precision and pride.
+      </p>
+    </div>
+  </section>
 
-    <h3>Employee Hours</h3>
-    <table id="employeeTable">
-      <thead>
-        <tr>
-          <th>Employee Name</th>
-          <th>Rate List (Job on Site)</th>
-          <th>Unit Type</th>
-          <th>Units</th>
-          <th>Remove</th>
-        </tr>
-      </thead>
-      <tbody id="employeeRows">
-        <!-- Rows inserted here -->
-      </tbody>
-    </table>
-    <button type="button" onclick="addRow()">+ Add Employee</button>
-    <button type="submit">Submit Ticket</button>
-  </form>
-
-  <script>
-    const employeeList = ['John Smith', 'Jane Doe', 'Mike Johnson'];
-
-    function addRow() {
-      const table = document.getElementById('employeeRows');
-      const row = document.createElement('tr');
-
-      // Employee Name dropdown
-      const nameCell = document.createElement('td');
-      const nameSelect = document.createElement('select');
-      employeeList.forEach(name => {
-        const option = document.createElement('option');
-        option.value = name;
-        option.textContent = name;
-        nameSelect.appendChild(option);
-      });
-      const addNewOption = document.createElement('option');
-      addNewOption.value = '__new__';
-      addNewOption.textContent = 'Add new...';
-      nameSelect.appendChild(addNewOption);
-      nameSelect.onchange = function () {
-        if (this.value === '__new__') {
-          const newName = prompt("Enter new employee name:");
-          if (newName) {
-            employeeList.push(newName);
-            this.innerHTML = '';
-            employeeList.forEach(name => {
-              const option = document.createElement('option');
-              option.value = name;
-              option.textContent = name;
-              this.appendChild(option);
-            });
-            this.appendChild(addNewOption);
-            this.value = newName;
-          } else {
-            this.value = '';
-          }
-        }
-      };
-      nameCell.appendChild(nameSelect);
-      row.appendChild(nameCell);
-
-      // Rate list
-      const rateCell = document.createElement('td');
-      const rateInput = document.createElement('input');
-      rateInput.type = 'text';
-      rateCell.appendChild(rateInput);
-      row.appendChild(rateCell);
-
-      // Unit type
-      const unitTypeCell = document.createElement('td');
-      const unitSelect = document.createElement('select');
-      ['Hours', 'Days', 'Loads'].forEach(unit => {
-        const option = document.createElement('option');
-        option.value = unit;
-        option.textContent = unit;
-        unitSelect.appendChild(option);
-      });
-      unitTypeCell.appendChild(unitSelect);
-      row.appendChild(unitTypeCell);
-
-      // Units
-      const unitsCell = document.createElement('td');
-      const unitsInput = document.createElement('input');
-      unitsInput.type = 'number';
-      unitsInput.min = '0';
-      unitsCell.appendChild(unitsInput);
-      row.appendChild(unitsCell);
-
-      // Remove button
-      const removeCell = document.createElement('td');
-      const removeButton = document.createElement('button');
-      removeButton.type = 'button';
-      removeButton.textContent = 'Remove';
-      removeButton.onclick = () => row.remove();
-      removeCell.appendChild(removeButton);
-      row.appendChild(removeCell);
-
-      table.appendChild(row);
-    }
-
-    document.getElementById('ticketForm').addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      const ticket = {
-        jobName: this.jobName.value,
-        jobNumber: this.jobNumber.value,
-        description: this.workDescription.value,
-        employees: []
-      };
-
-      const rows = document.querySelectorAll('#employeeRows tr');
-      rows.forEach(row => {
-        const [nameSel, rateInput, unitTypeSel, unitsInput] = row.querySelectorAll('select, input');
-        ticket.employees.push({
-          name: nameSel.value,
-          rateList: rateInput.value,
-          unitType: unitTypeSel.value,
-          units: unitsInput.value
-        });
-      });
-
-      console.log("Submitted Ticket:", ticket);
-      alert("Ticket submitted! (Check console for data)");
-
-      this.reset();
-      document.getElementById('employeeRows').innerHTML = '';
-    });
-  </script>
-
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-6 text-center text-gray-500 text-sm">
+    <p>Website design by Task Force Meridian Command Staff</p>
+  </footer>
 </body>
 </html>
